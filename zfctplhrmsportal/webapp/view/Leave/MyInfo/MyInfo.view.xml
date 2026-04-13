@@ -8,50 +8,14 @@
 		xmlns:f="sap.f"
 		xmlns:layout="sap.ui.layout"
 		height="100%">
-		<f:DynamicPage id="dynamicPageId" preserveHeaderStateOnScroll="true" headerExpanded="{/headerExpanded}" showFooter="true" fitContent="true">
+		<f:DynamicPage id="dynamicPageId1" preserveHeaderStateOnScroll="true" headerExpanded="{/headerExpanded}" showFooter="true" fitContent="true">
 			<!-- DynamicPage Title -->
 			<f:title>
+
 				<f:DynamicPageTitle>
 					<f:heading>
-						<Title text="My Info"/>
+						<Title text="My Info > Leave Register"/>
 					</f:heading>
-					<f:expandedContent>
-						<Label text="This is a subheading"/>
-					</f:expandedContent>
-					<f:snappedContent>
-						<Label text="This is a subheading"/>
-					</f:snappedContent>
-					<f:snappedTitleOnMobile>
-						<Title text="This is a subheading"/>
-					</f:snappedTitleOnMobile>
-					<f:content>
-						<OverflowToolbar>
-							<GenericTag text="SR"
-								status="Error"
-								press="onGenericTagPress"
-								design="StatusIconHidden">
-								<ObjectNumber number="2"
-									unit="M"
-									emphasized="false"
-									state="Error"/>
-							</GenericTag>
-						</OverflowToolbar>
-					</f:content>
-					<f:actions>
-						<ToolbarSpacer/>
-						<Button
-								text="Edit"
-								type="Emphasized"/>
-						<Button
-								text="Delete"
-								type="Transparent"/>
-						<Button
-								text="Copy"
-								type="Transparent"/>
-						<Button
-								icon="sap-icon://action"
-								type="Transparent"/>
-					</f:actions>
 				</f:DynamicPageTitle>
 			</f:title>
 
@@ -62,23 +26,60 @@
 								alignItems="Start"
 								justifyContent="SpaceBetween">
 							<items>
-								<Panel
-										backgroundDesign="Transparent"
-										class="sapUiNoContentPadding">
+								<Panel backgroundDesign="Transparent"  >
 									<content>
-										<layout:HorizontalLayout
-												allowWrapping="true">
-											<layout:VerticalLayout
-													class="sapUiMediumMarginEnd">
-												<ObjectAttribute title="Location" text="Warehouse A"/>
-												<ObjectAttribute title="Halway" text="23L"/>
-												<ObjectAttribute title="Rack" text="34"/>
+										
+										<layout:VerticalLayout class="sapUiTinyMargin" >
+											
+											<layout:VerticalLayout >
+												<Text text="Note*: All leave marked in the muster for the selected year will be considered as consumed.
+												  In addition, Adjustment/Encashment/In-Process (non-approved leave applications) entries will also be treated as consumed.
+												  Any leave entered in Adjustment/Increment during the payroll process will be credited." />
 											</layout:VerticalLayout>
-											<layout:VerticalLayout>
-												<ObjectAttribute title="Availability"/>
-												<ObjectStatus text="In Stock" state="Success" />
+
+											<layout:HorizontalLayout class="sapUiTinyMargin" >
+											
+												<layout:HorizontalLayout >
+													<Label class="sapUiTinyMargin" text="Employee: "  required="true"/>
+													<Input  class="sapUiTinyMargin" id="idEmployee" required="true" width="10rem" />		
+												</layout:HorizontalLayout>
+
+												<layout:HorizontalLayout  >																						
+													<Label class="sapUiTinyMargin" text="For the Period:"  required="true"/>
+													<ComboBox class="sapUiTinyMargin" id="idPeriod"  required="true">
+														<c:Item key="2024" text="2024"/>
+                        								<c:Item key="2025" text="2025"/>
+														<c:Item key="2026" text="2026"/>
+													</ComboBox>
+												</layout:HorizontalLayout>
+
+												<layout:HorizontalLayout >
+													<Label  class="sapUiTinyMargin" text="Leave Type: " required="true"/>
+													<ComboBox class="sapUiTinyMargin" id="idLeaveType"  required="true">
+														<c:Item key="CL" text="Casual Leave"/>
+                        								<c:Item key="SL" text="Sick Leave"/>
+														<c:Item key="PL" text="Privilege Leave"/>
+														<c:Item key="OL" text="Other Leave"/>
+														<c:Item key="LWP" text="Leave Without pay"/>
+														<c:Item key="CO" text="Comp. Leave Enjoy"/>
+													</ComboBox>
+												</layout:HorizontalLayout>	
+
+											</layout:HorizontalLayout>										
+
+											<layout:HorizontalLayout class="sapUiTinyMargin" >
+												<CheckBox text="Get Report From Archive Data" />
+											</layout:HorizontalLayout>
+
+                                            <layout:VerticalLayout class="sapUiTinyMargin">
+												<layout:HorizontalLayout class="sapUiTinyMargin" >
+													<Button class="sapUiTinyMargin" text="View" press="onViewPress"/>
+                    								<Button class="sapUiTinyMargin" text="Reset" press="onResetPress"/>
+												</layout:HorizontalLayout>
 											</layout:VerticalLayout>
-										</layout:HorizontalLayout>
+
+										</layout:VerticalLayout>
+
 									</content>
 								</Panel>
 							</items>
@@ -88,114 +89,73 @@
 
 			<f:content>
 				<t:Table
-						rows="{/ProductCollection}"
-						selectionMode="MultiToggle"
+						rows="{Order_Details}"
+						selectionMode="None"
 						rowMode="Auto">
 					<t:extension>
 						<OverflowToolbar style="Clear">
-							<Title text="Products"/>
+							<Title text="Employee:"/>
 						</OverflowToolbar>
 					</t:extension>
 					<t:columns>
-						<t:Column width="11rem">
-							<Label text="Product Name" />
+						<t:Column width="3rem" hAlign="Left">
+							<Label text="+/-" />
 							<t:template>
-								<Text text="{Name}" wrapping="false" />
+								<Text text="{OrderID}"/>
 							</t:template>
 						</t:Column>
-						<t:Column width="11rem">
-							<Label text="Product Id" />
+						<t:Column width="11rem" hAlign="Left">
+							<Label text="Leave Type" />
 							<t:template>
-								<Input value="{ProductId}"/>
+								<Text text="{ProductID}"/>
 							</t:template>
 						</t:Column>
-						<t:Column width="6rem" hAlign="End">
-							<Label text="Quantity" />
+						<t:Column width="11rem" hAlign="Left">
+							<Label text="Opening Balance" />
 							<t:template>
-								<Label text="{Quantity}" />
+								<Text text="{UnitPrice}"/>
 							</t:template>
 						</t:Column>
-						<t:Column width="9rem">
-							<Label text="Status" />
+						<t:Column width="11rem" hAlign="Left">
+							<Label text="Consumed Days" />
 							<t:template>
-								<ObjectStatus text="{Status}" state="{
-								path: 'Available',
-								formatter: '.formatAvailableToObjectState'
-							}"/>
+								<Text text="{Quantity}"/>
 							</t:template>
 						</t:Column>
-						<t:Column width="9rem">
-							<Label text="Price" />
+						<t:Column width="11rem" hAlign="Left">
+							<Label text="Credit Days" />
 							<t:template>
-								<u:Currency value="{Price}" currency="{CurrencyCode}"/>
+								<Text text="{Discount}"/>
 							</t:template>
 						</t:Column>
-						<t:Column width="12rem">
-							<Label text="Supplier" />
+						<t:Column width="11rem" hAlign="Left">
+							<Label text="Available Balance" />
 							<t:template>
-								<ComboBox value="{SupplierName}" items="{path: '/Suppliers', templateShareable: false}">
-									<c:Item text="{Name}"/>
-								</ComboBox>
+								<Text text="{OrderID}"/>
 							</t:template>
 						</t:Column>
-						<t:Column width="9rem">
-							<Label text="Image" />
+						<t:Column width="11rem" hAlign="Left">
+							<Label text="Tansaction Date" />
 							<t:template>
-								<Link text="Show Image" href="{ProductPicUrl}" target="_blank"/>
+								<Text text="{ProductID}"/>
 							</t:template>
 						</t:Column>
-						<t:Column width="9rem">
-							<Label text="Details" />
+						<t:Column width="11rem" hAlign="Left">
+							<Label text="Remark" />
 							<t:template>
-								<Button text="Show Details" press="handleDetailsPress"/>
-							</t:template>
-						</t:Column>
-						<t:Column width="7rem">
-							<Label text="Heavy Weight" />
-							<t:template>
-								<CheckBox selected="{
-								path: 'Heavy',
-								type: 'sap.ui.model.type.String'
-							}"/>
-							</t:template>
-						</t:Column>
-						<t:Column width="12rem">
-							<Label text="Category" />
-							<t:template>
-								<Select selectedKey="{Category}" items="{path: '/Categories', templateShareable: false}">
-									<c:Item text="{Name}" key="{Name}"/>
-								</Select>
-							</t:template>
-						</t:Column>
-						<t:Column width="6rem" hAlign="Center">
-							<Label text="Status" />
-							<t:template>
-								<c:Icon src="{
-								path: 'Available',
-								formatter: '.formatAvailableToIcon'
-							}"/>
-							</t:template>
-						</t:Column>
-						<t:Column width="11rem" hAlign="Center">
-							<Label text="Delivery Date" />
-							<t:template>
-								<DatePicker value="{
-								path: 'DeliveryDate',
-								type: 'sap.ui.model.type.Date',
-								formatOptions: {source: {pattern: 'timestamp'}}
-							}"/>
+								<Text text="{UnitPrice}"/>
 							</t:template>
 						</t:Column>
 					</t:columns>
 				</t:Table>
 			</f:content>
 			<!-- DynamicPage Footer -->
-			<f:footer>
+			<!-- <f:footer>
 				<OverflowToolbar>
 					<ToolbarSpacer/>
 					<Button type="Accept" text="Accept"/>
 					<Button type="Reject" text="Reject"/>
 				</OverflowToolbar>
-			</f:footer>
+			</f:footer> -->
 		</f:DynamicPage>
 </mvc:View>
